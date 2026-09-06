@@ -55,8 +55,8 @@ def shorten_url(request: Request, target_url: str = Form(...), db: Session = Dep
     # Re-fetch all URLs to render the updated list
     urls = db.query(models.URL).order_by(models.URL.id.desc()).all()
     
-    # We return ONLY the partial HTML that HTMX requested to replace
-    return templates.TemplateResponse(request=request, name="partials/url_list.html", context={"urls": urls})
+    # We return the modal partial. It contains the modal HTML and an OOB swap for the table.
+    return templates.TemplateResponse(request=request, name="partials/shorten_response.html", context={"urls": urls, "new_url": db_url})
 
 
 @app.get("/{short_code}")

@@ -90,8 +90,8 @@
         <div class="bg-dark-card rounded-xl md:rounded-2xl border border-dark-border mb-10 md:mb-14 shadow-2xl overflow-hidden relative">
             <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-accent/50 to-transparent"></div>
             <div class="p-1 md:p-1.5">
-                <!-- Added hx-on::after-request to reset the form and show a toast -->
-                <form hx-post="/shorten" hx-target="#url-table-container" hx-swap="innerHTML" hx-on::after-request="if(event.detail.successful) { this.reset(); showToast('URL shortened successfully!'); }" class="flex flex-col sm:flex-row gap-2 md:gap-3 bg-dark-bg p-2 md:p-3 rounded-lg md:rounded-xl">
+                <!-- Using OOB swaps: target modal-container, and HTMX will update the table via OOB -->
+                <form hx-post="/shorten" hx-target="#modal-container" hx-swap="innerHTML" hx-on::after-request="if(event.detail.successful) { this.reset(); }" class="flex flex-col sm:flex-row gap-2 md:gap-3 bg-dark-bg p-2 md:p-3 rounded-lg md:rounded-xl">
                     <div class="flex-1 relative">
                         <label for="target_url" class="sr-only">Long URL</label>
                         <input type="url" id="target_url" name="target_url" placeholder="https://example.com/very-long-path" required
@@ -136,24 +136,7 @@
         </div>
     </footer>
 
-    <!-- Toast Notification Container -->
-    <div id="toast" class="fixed bottom-6 right-6 transform transition-all duration-300 translate-y-20 opacity-0 bg-dark-card border border-dark-border shadow-2xl rounded-lg px-4 py-3 flex items-center gap-3 z-50">
-        <div class="w-6 h-6 rounded-full bg-accent/20 flex items-center justify-center">
-            <svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
-        </div>
-        <span id="toast-message" class="text-sm font-semibold text-white"></span>
-    </div>
-
-    <!-- Toast Logic -->
-    <script>
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toast-message').innerText = message;
-            toast.classList.remove('translate-y-20', 'opacity-0');
-            setTimeout(() => {
-                toast.classList.add('translate-y-20', 'opacity-0');
-            }, 3000);
-        }
-    </script>
+    <!-- Modal Container -->
+    <div id="modal-container"></div>
 </body>
 </html>

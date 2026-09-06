@@ -1,0 +1,32 @@
+<div id="url-table-container" hx-swap-oob="true">
+    {% include 'partials/url_list.html' %}
+</div>
+
+<!-- Modal Overlay -->
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+    <!-- Modal Content -->
+    <div class="bg-dark-card border border-dark-border rounded-xl shadow-2xl p-6 w-[90%] max-w-md relative">
+        <button onclick="document.getElementById('modal-container').innerHTML = ''" class="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors focus:outline-none">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+        
+        <div class="mb-5">
+            <div class="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center mb-4">
+                <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            <h3 class="text-xl font-bold text-dark-heading mb-1">URL Shortened!</h3>
+            <p class="text-sm text-gray-400">Your new short link is ready to share.</p>
+        </div>
+        
+        <div class="bg-dark-bg border border-dark-border rounded-lg p-3 flex items-center justify-between mb-6">
+            <span id="shortened-url" class="text-white font-medium text-sm truncate select-all">{{ request.base_url }}{{ new_url.short_code }}</span>
+            <button onclick="navigator.clipboard.writeText('{{ request.base_url }}{{ new_url.short_code }}'); this.innerText = 'Copied!'; setTimeout(() => this.innerText = 'Copy', 2000);" class="ml-3 px-3 py-1.5 bg-dark-border text-xs font-semibold text-white rounded hover:bg-gray-700 transition-colors shrink-0 focus:outline-none focus:ring-2 focus:ring-accent">
+                Copy
+            </button>
+        </div>
+        
+        <button onclick="document.getElementById('modal-container').innerHTML = ''" class="w-full py-3 bg-accent text-dark-bg font-bold rounded-lg hover:bg-white transition-colors glow-shadow focus:outline-none">
+            Done
+        </button>
+    </div>
+</div>
