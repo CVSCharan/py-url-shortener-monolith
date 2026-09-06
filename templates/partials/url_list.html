@@ -1,0 +1,23 @@
+<table>
+    <thead>
+        <tr>
+            <th>Short URL</th>
+            <th>Original URL</th>
+            <th>Clicks</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for url in urls %}
+        <tr>
+            <!-- Using request.base_url to get the current host automatically -->
+            <td><a href="{{ request.base_url }}{{ url.short_code }}" target="_blank">{{ request.base_url }}{{ url.short_code }}</a></td>
+            <td><a href="{{ url.target_url }}" target="_blank" style="color: #666; text-decoration: none;">{{ url.target_url[:50] }}...</a></td>
+            <td>{{ url.clicks }}</td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="3">No URLs shortened yet. Create one above!</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

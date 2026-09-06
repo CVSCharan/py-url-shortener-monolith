@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python URL Shortener</title>
+    <!-- Include HTMX -->
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+        .card { padding: 1rem; border: 1px solid #ccc; border-radius: 8px; margin-bottom: 1rem; }
+        form { display: flex; gap: 0.5rem; margin-bottom: 2rem; }
+        input[type="url"] { flex: 1; padding: 0.5rem; font-size: 1rem; }
+        button { padding: 0.5rem 1rem; font-size: 1rem; cursor: pointer; background: #007bff; color: white; border: none; border-radius: 4px; }
+        button:hover { background: #0056b3; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { text-align: left; padding: 0.75rem; border-bottom: 1px solid #eee; }
+        .htmx-indicator { display: none; }
+        .htmx-request .htmx-indicator { display: inline; }
+    </style>
+</head>
+<body>
+    <h1>URL Shortener 🔗</h1>
+    <p>Built with FastAPI, PostgreSQL, Jinja2, and HTMX.</p>
+
+    <!-- 
+      HTMX Magic: 
+      hx-post tells it to POST to /shorten when submitted.
+      hx-target="#url-table-container" tells it to put the response inside that div.
+      hx-swap="innerHTML" tells it to replace the contents of the div.
+    -->
+    <form hx-post="/shorten" hx-target="#url-table-container" hx-swap="innerHTML">
+        <input type="url" name="target_url" placeholder="Enter a long URL..." required>
+        <button type="submit">Shorten</button>
+        <span class="htmx-indicator">Loading...</span>
+    </form>
+
+    <h2>Your Links</h2>
+    <div id="url-table-container">
+        <!-- We use an include so we can reuse just the table HTML in our HTMX response -->
+        {% include 'partials/url_list.html' %}
+    </div>
+</body>
+</html>
