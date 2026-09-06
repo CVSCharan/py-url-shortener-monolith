@@ -1,0 +1,5 @@
+{% macro label(text, for_id="", class="") %}
+<label {% if for_id %}for="{{ for_id }}"{% endif %} class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-dark-heading {{ class }}">
+    {{ text }}
+</label>
+{% endmacro %}
