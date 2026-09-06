@@ -25,9 +25,9 @@
                             {% endif %}
                         </a>
                         <button onclick="navigator.clipboard.writeText('{{ request.base_url }}{{ url.custom_alias if url.custom_alias else url.short_code }}'); const btn = this; const originalText = btn.innerHTML; btn.innerHTML = 'Copied!'; setTimeout(() => btn.innerHTML = originalText, 2000);" class="text-[10px] md:text-xs bg-dark-card border border-dark-border px-2 py-1 rounded hover:bg-dark-border transition-colors">Copy</button>
-                        <a href="/qr/{{ url.short_code }}" target="_blank" class="text-[10px] md:text-xs bg-dark-card border border-accent/30 text-accent hover:bg-accent hover:text-dark-bg px-2 py-1 rounded transition-colors ml-1 font-bold" title="View QR Code">
+                        <button hx-get="/qr_modal/{{ url.short_code }}" hx-target="#modal-container" hx-swap="innerHTML" class="text-[10px] md:text-xs bg-dark-card border border-accent/30 text-accent hover:bg-accent hover:text-dark-bg px-2 py-1 rounded transition-colors ml-1 font-bold focus:outline-none" title="View QR Code">
                             QR
-                        </a>
+                        </button>
                     </div>
                 </td>
                 <td class="px-6 py-5">

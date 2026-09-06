@@ -16,9 +16,11 @@ Because we use Jinja2 to render HTML from the server and HTMX for interactivity,
 - **Custom Aliases:** Users can define their own URL endings (e.g., `/my-promo`).
 - **Password Protection:** Secure destination links with a hashed password (bcrypt).
 - **Expiration Dates:** Links automatically expire after a set time, returning a 410 Gone status.
-- **QR Code Generation:** Each link gets a dynamically generated QR code available at `/qr/{short_code}`.
+- **Inline QR Modals:** Each link gets a dynamically generated QR code available via an HTMX modal.
 - **Rate Limiting:** IP-based rate limiting (5 requests/minute) using `slowapi` to prevent abuse.
-- **Dashboard & Pagination:** A dedicated dashboard at `/dashboard` to view all generated links with pagination support.
+- **Dashboard & Pagination:** A dedicated dashboard at `/dashboard` to view all generated links.
+- **Jinja2 Component System:** Reusable UI macros (mimicking React components) for DRY templates.
+- **Shadcn UI Aesthetics:** Premium high-contrast Zinc monochrome theme with Inter typography.
 
 ## How to Run
 

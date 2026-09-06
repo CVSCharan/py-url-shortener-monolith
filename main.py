@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
-from datetime import datetime
+from datetime import datetime, timedelta
 from passlib.context import CryptContext
 import string
 import random
@@ -44,7 +44,8 @@ def generate_short_code(length=6):
 def read_root(request: Request, db: Session = Depends(get_db)):
     """Render the homepage with the list of recently shortened URLs."""
     urls = db.query(models.URL).order_by(models.URL.id.desc()).limit(5).all()
-    return templates.TemplateResponse(request=request, name="index.html", context={"urls": urls})
+    default_expiration = (datetime.now() + timedelta(days=7)).strftime("%Y-%m-%dT%H:%M")
+    return templates.TemplateResponse(request=request, name="index.html", context={"urls": urls, "default_expiration": default_expiration})
 
 @app.get("/dashboard", response_class=HTMLResponse)
 def view_dashboard(request: Request, page: int = 1, db: Session = Depends(get_db)):
@@ -116,6 +117,15 @@ def shorten_url(
     
     # We return the modal partial. It contains the modal HTML and an OOB swap for the table.
     return templates.TemplateResponse(request=request, name="partials/shorten_response.html", context={"urls": urls, "new_url": db_url})
+
+@app.get("/qr_modal/{short_code}", response_class=HTMLResponse)
+def qr_modal(short_code: str, request: Request, db: Session = Depends(get_db)):
+    """Return a modal containing the QR code."""
+    db_url = db.query(models.URL).filter(models.URL.short_code == short_code).first()
+    if not db_url:
+        raise HTTPException(status_code=404, detail="URL not found")
+    
+    return templates.TemplateResponse(request=request, name="partials/qr_modal.html", context={"url": db_url})
 
 
 @app.get("/qr/{short_code}")
