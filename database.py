@@ -6,17 +6,20 @@ from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
 
-# Get the connection string. If it's missing, throw an error.
+# Get the connection string. If it's missing, fall back to SQLite for local development.
 SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL")
 if not SQLALCHEMY_DATABASE_URL:
-    raise ValueError("DATABASE_URL is missing! Please add it to your .env file.")
+    SQLALCHEMY_DATABASE_URL = "sqlite:///./shortener.db"
 
 # SQLAlchemy 1.4+ strictly requires postgresql:// instead of postgres://
 if SQLALCHEMY_DATABASE_URL.startswith("postgres://"):
     SQLALCHEMY_DATABASE_URL = SQLALCHEMY_DATABASE_URL.replace("postgres://", "postgresql://", 1)
 
+# The connect_args={"check_same_thread": False} is only needed for SQLite in FastAPI
+connect_args = {"check_same_thread": False} if SQLALCHEMY_DATABASE_URL.startswith("sqlite") else {}
+
 # The engine is responsible for communicating with the database.
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
+engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args=connect_args)
 
 # A SessionLocal class will be a factory for new database sessions.
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
