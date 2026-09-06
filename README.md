@@ -5,11 +5,20 @@ Because we use Jinja2 to render HTML from the server and HTMX for interactivity,
 
 ## Tech Stack
 - **Framework:** FastAPI
-- **Database:** PostgreSQL
+- **Database:** PostgreSQL (with Alembic for migrations)
 - **ORM:** SQLAlchemy
 - **Data Validation:** Pydantic
 - **Frontend Template Engine:** Jinja2
 - **Frontend Interactivity:** HTMX
+- **Styling:** Tailwind CSS
+
+## Premium Features Added
+- **Custom Aliases:** Users can define their own URL endings (e.g., `/my-promo`).
+- **Password Protection:** Secure destination links with a hashed password (bcrypt).
+- **Expiration Dates:** Links automatically expire after a set time, returning a 410 Gone status.
+- **QR Code Generation:** Each link gets a dynamically generated QR code available at `/qr/{short_code}`.
+- **Rate Limiting:** IP-based rate limiting (5 requests/minute) using `slowapi` to prevent abuse.
+- **Dashboard & Pagination:** A dedicated dashboard at `/dashboard` to view all generated links with pagination support.
 
 ## How to Run
 

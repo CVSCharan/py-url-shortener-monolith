@@ -62,6 +62,11 @@ def view_dashboard(request: Request, page: int = 1, db: Session = Depends(get_db
         "total_urls": total_urls
     })
 
+@app.get("/about", response_class=HTMLResponse)
+def about_page(request: Request):
+    """Render the about page."""
+    return templates.TemplateResponse(request=request, name="about.html")
+
 
 from typing import Optional
 
