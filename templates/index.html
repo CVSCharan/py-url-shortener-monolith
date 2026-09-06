@@ -3,35 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium URL Shortener</title>
+    <title>URL Shortener</title>
     <!-- Include HTMX -->
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
     <!-- Include Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Premium Google Fonts: Plus Jakarta Sans for body, Outfit for Display -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Professional Google Font: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-                        display: ['"Outfit"', 'sans-serif'],
+                        sans: ['"Inter"', 'sans-serif'],
                     },
-                    animation: {
-                        blob: "blob 7s infinite",
-                        fadeUp: "fadeUp 0.8s ease-out forwards",
-                    },
-                    keyframes: {
-                        blob: {
-                            "0%": { transform: "translate(0px, 0px) scale(1)" },
-                            "33%": { transform: "translate(30px, -50px) scale(1.1)" },
-                            "66%": { transform: "translate(-20px, 20px) scale(0.9)" },
-                            "100%": { transform: "translate(0px, 0px) scale(1)" },
-                        },
-                        fadeUp: {
-                            "0%": { opacity: "0", transform: "translateY(20px)" },
-                            "100%": { opacity: "1", transform: "translateY(0)" },
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
                         }
                     }
                 }
@@ -39,118 +31,80 @@
         }
     </script>
     <style>
-        .animation-delay-2000 { animation-delay: 2s; }
-        .animation-delay-4000 { animation-delay: 4s; }
-        
-        /* Glassmorphism Card Style */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.65);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
-        }
-        
         .htmx-indicator { display: none; }
         .htmx-request .htmx-indicator { display: inline-block; }
     </style>
 </head>
-<body class="bg-[#fafcff] min-h-screen flex flex-col selection:bg-indigo-500/30 selection:text-indigo-900 text-slate-800 relative z-0 overflow-x-hidden">
+<body class="bg-gray-50 min-h-screen flex flex-col text-gray-900 antialiased">
     
-    <!-- Animated Ambient Background -->
-    <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
-        <div class="absolute -top-[20%] -left-[10%] w-[70vw] h-[70vw] rounded-full bg-purple-300/40 mix-blend-multiply filter blur-[100px] opacity-70 animate-blob"></div>
-        <div class="absolute top-[10%] -right-[10%] w-[60vw] h-[60vw] rounded-full bg-indigo-300/40 mix-blend-multiply filter blur-[100px] opacity-70 animate-blob animation-delay-2000"></div>
-        <div class="absolute -bottom-[20%] left-[20%] w-[80vw] h-[80vw] rounded-full bg-pink-300/40 mix-blend-multiply filter blur-[100px] opacity-70 animate-blob animation-delay-4000"></div>
-        <!-- Grid pattern overlay -->
-        <div class="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-    </div>
-
-    <!-- Dynamic Island Navbar -->
-    <div class="fixed top-6 left-1/2 -translate-x-1/2 w-[90%] max-w-2xl z-50 animate-fadeUp">
-        <nav class="bg-white/60 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-white/60 rounded-full px-2 py-2 flex justify-between items-center transition-all duration-300 hover:bg-white/80">
-            <div class="flex items-center gap-3 pl-4">
-                <div class="bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 p-2 rounded-full text-white shadow-md flex items-center justify-center">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+    <!-- Standard Professional Navbar -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-2">
+                    <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                    <span class="font-semibold text-lg tracking-tight">URL Shortener</span>
                 </div>
-                <span class="font-display font-bold text-lg tracking-wide text-slate-800">Shortnr.</span>
+                <nav class="flex gap-4">
+                    <a href="https://github.com/CVSCharan" target="_blank" class="text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors">GitHub</a>
+                </nav>
             </div>
-            
-            <div class="flex items-center gap-1 pr-1">
-                <a href="https://github.com/CVSCharan" target="_blank" class="px-5 py-2.5 rounded-full bg-slate-900 text-white text-sm font-semibold hover:bg-slate-800 hover:shadow-lg hover:scale-105 transition-all duration-300 active:scale-95">GitHub Profile</a>
-            </div>
-        </nav>
-    </div>
+        </div>
+    </header>
 
     <!-- Main Content -->
-    <main class="flex-grow max-w-5xl mx-auto px-4 pt-40 pb-12 w-full flex flex-col justify-start z-10">
+    <main class="flex-grow max-w-5xl mx-auto px-4 py-12 w-full flex flex-col">
         
-        <!-- Hero Section -->
-        <div class="text-center mb-16 animate-fadeUp" style="animation-delay: 0.1s;">
-            <div class="inline-flex items-center justify-center px-4 py-1.5 mb-6 text-sm font-semibold text-indigo-700 bg-indigo-100/50 border border-indigo-200/50 rounded-full shadow-sm backdrop-blur-sm">
-                ✨ The ultimate link management tool
-            </div>
-            <h1 class="font-display text-5xl sm:text-6xl md:text-7xl font-black tracking-tight text-slate-900 mb-6 drop-shadow-sm leading-tight">
-                Shorten your <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500">links</span><br/>expand your reach.
-            </h1>
-            <p class="text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto font-medium leading-relaxed">
-                Experience lightning-fast, server-side rendered performance powered by FastAPI, PostgreSQL, and HTMX.
+        <!-- Header Section -->
+        <div class="mb-10 text-center sm:text-left">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Create Short Links</h1>
+            <p class="text-base text-gray-600">
+                A fast, reliable URL shortening service powered by FastAPI and PostgreSQL.
             </p>
         </div>
 
-        <!-- Shortener Card -->
-        <div class="glass-card rounded-[2rem] overflow-hidden mb-16 transform transition-all hover:shadow-[0_20px_40px_rgb(0,0,0,0.1)] duration-500 animate-fadeUp group" style="animation-delay: 0.2s;">
-            <div class="p-8 sm:p-10 relative overflow-hidden">
-                <!-- Inner glow effect -->
-                <div class="absolute inset-0 bg-gradient-to-b from-white/40 to-transparent pointer-events-none"></div>
-                
-                <form hx-post="/shorten" hx-target="#url-table-container" hx-swap="innerHTML" class="relative z-10 flex flex-col sm:flex-row gap-4 items-center">
-                    <div class="flex-1 w-full relative">
-                        <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none text-slate-400 group-focus-within:text-indigo-600 transition-colors">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
-                        </div>
-                        <input type="url" name="target_url" placeholder="Paste your long URL here..." required
-                            class="w-full pl-14 pr-6 py-5 rounded-2xl border-0 bg-white/70 text-slate-800 placeholder-slate-400 shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)] focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:bg-white transition-all duration-300 text-lg font-medium">
+        <!-- Input Card -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-10">
+            <div class="p-6">
+                <form hx-post="/shorten" hx-target="#url-table-container" hx-swap="innerHTML" class="flex flex-col sm:flex-row gap-3">
+                    <div class="flex-1 relative">
+                        <label for="target_url" class="sr-only">Long URL</label>
+                        <input type="url" id="target_url" name="target_url" placeholder="Enter your long URL here (e.g., https://example.com/very-long-path)" required
+                            class="block w-full pl-4 pr-4 py-3 rounded-md border border-gray-300 bg-gray-50 text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-colors">
                     </div>
                     <button type="submit" 
-                        class="w-full sm:w-auto inline-flex items-center justify-center px-10 py-5 border border-transparent text-lg font-bold rounded-2xl text-white bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 hover:bg-gradient-to-br shadow-xl hover:shadow-indigo-500/30 focus:outline-none focus:ring-4 focus:ring-indigo-500/30 hover:scale-[1.02] active:scale-95 transition-all duration-300 relative overflow-hidden group">
-                        <!-- Shimmer effect -->
-                        <span class="absolute top-0 -left-[100%] w-1/2 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-[30deg] group-hover:animate-[shimmer_1.5s_infinite]"></span>
-                        <span class="relative z-10 flex items-center">
-                            Shorten It
-                            <svg class="ml-2 -mr-1 h-5 w-5 htmx-indicator animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                            </svg>
-                        </span>
+                        class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors">
+                        Shorten URL
+                        <svg class="ml-2 -mr-1 h-4 w-4 htmx-indicator animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
                     </button>
                 </form>
             </div>
         </div>
 
-        <!-- Links Section -->
-        <div class="animate-fadeUp" style="animation-delay: 0.3s;">
-            <div class="flex items-center justify-between mb-8 px-2">
-                <h2 class="font-display text-3xl font-black text-slate-800 tracking-tight">Recent Links</h2>
+        <!-- Links Table Section -->
+        <div>
+            <div class="mb-4">
+                <h2 class="text-xl font-semibold text-gray-900">Recent Links</h2>
             </div>
             
-            <div id="url-table-container" class="glass-card rounded-3xl overflow-hidden">
+            <div id="url-table-container" class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
                 {% include 'partials/url_list.html' %}
             </div>
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="mt-auto py-10 z-10">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div class="text-sm text-slate-500 flex items-center gap-1.5 font-semibold bg-white/50 backdrop-blur-sm px-6 py-3 rounded-full border border-white/50 shadow-sm">
-                    Crafted with 
-                    <svg class="w-4 h-4 text-pink-500 animate-pulse" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path></svg> 
-                    by 
-                    <a href="https://charan-cvs.dev" target="_blank" class="text-indigo-600 hover:text-indigo-800 transition-colors underline decoration-indigo-200 underline-offset-4">
-                        CVS Charan
-                    </a>
+    <!-- Professional Footer -->
+    <footer class="bg-white border-t border-gray-200 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-sm text-gray-500">
+                    &copy; 2026 CVS Charan. All rights reserved.
+                </p>
+                <div class="text-sm text-gray-500">
+                    Designed by <a href="https://charan-cvs.dev" target="_blank" class="text-primary-600 hover:text-primary-700 font-medium hover:underline">CVS Charan</a>
                 </div>
             </div>
         </div>
