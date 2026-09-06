@@ -11,6 +11,10 @@ SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL")
 if not SQLALCHEMY_DATABASE_URL:
     raise ValueError("DATABASE_URL is missing! Please add it to your .env file.")
 
+# SQLAlchemy 1.4+ strictly requires postgresql:// instead of postgres://
+if SQLALCHEMY_DATABASE_URL.startswith("postgres://"):
+    SQLALCHEMY_DATABASE_URL = SQLALCHEMY_DATABASE_URL.replace("postgres://", "postgresql://", 1)
+
 # The engine is responsible for communicating with the database.
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
