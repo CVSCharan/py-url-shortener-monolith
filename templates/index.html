@@ -8,27 +8,27 @@
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
     <!-- Include Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Manrope Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['"Manrope"', 'sans-serif'],
+                        sans: ['"Inter"', 'sans-serif'],
                     },
                     colors: {
                         dark: {
-                            bg: '#050505',
-                            card: '#111111',
-                            border: '#222222',
-                            text: '#A3A3A3',
-                            heading: '#FAFAFA'
+                            bg: '#09090b',
+                            card: '#09090b',
+                            border: '#27272a',
+                            text: '#a1a1aa',
+                            heading: '#fafafa'
                         },
                         accent: {
-                            DEFAULT: '#38bdf8', // Tailwind light blue
-                            glow: 'rgba(56, 189, 248, 0.4)'
+                            DEFAULT: '#fafafa',
+                            hover: '#f4f4f5'
                         }
                     }
                 }
@@ -36,21 +36,9 @@
         }
     </script>
     <style>
-        body { font-family: 'Manrope', sans-serif; }
+        body { font-family: 'Inter', sans-serif; }
         .htmx-indicator { display: none; }
         .htmx-request .htmx-indicator { display: inline-block; }
-        
-        /* Subtle grid background for dark mode */
-        .bg-grid {
-            background-size: 40px 40px;
-            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-        }
-        
-        /* Neon glow effect */
-        .glow-shadow {
-            box-shadow: 0 0 20px theme('colors.accent.glow');
-        }
     </style>
 </head>
 <body class="bg-dark-bg text-dark-text min-h-screen flex flex-col antialiased bg-grid">
@@ -76,21 +64,21 @@
     </header>
 
     <!-- Main Content -->
-    <main class="flex-grow max-w-5xl mx-auto px-4 py-8 md:py-16 lg:py-20 w-full flex flex-col relative">
+    <main class="flex-grow max-w-5xl mx-auto px-4 py-8 md:py-16 lg:py-20 w-full flex flex-col items-center relative">
         
         <!-- Subtle background glow -->
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-lg h-64 bg-accent/10 blur-[100px] rounded-full pointer-events-none z-[-1]"></div>
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-lg h-64 bg-accent/5 blur-[100px] rounded-full pointer-events-none z-[-1]"></div>
 
         <!-- Header Section -->
-        <div class="mb-8 md:mb-12 text-center">
-            <h1 class="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-dark-heading mb-4 md:mb-6 tracking-tight leading-tight">Create <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent to-blue-600">Short Links</span></h1>
+        <div class="mb-8 md:mb-12 text-center w-full">
+            <h1 class="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-dark-heading mb-4 md:mb-6 tracking-tight leading-tight">Create <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent to-gray-500">Short Links</span></h1>
             <p class="text-base sm:text-lg md:text-xl lg:text-2xl text-dark-text max-w-3xl mx-auto font-medium">
                 A fast, reliable URL shortening service. Dark, sleek, and developer-friendly.
             </p>
         </div>
 
         <!-- Input Card -->
-        <div class="bg-dark-card rounded-xl md:rounded-2xl border border-dark-border mb-10 md:mb-14 shadow-2xl overflow-hidden relative">
+        <div class="bg-dark-card rounded-xl md:rounded-2xl border border-dark-border mb-10 md:mb-14 shadow-2xl overflow-hidden relative w-full max-w-3xl">
             <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-accent/50 to-transparent"></div>
             <div class="p-1 md:p-1.5">
                 {% import 'components/ui_input.html' as ui_input %}
@@ -127,7 +115,7 @@
         </div>
 
         <!-- Links Table Section -->
-        <div>
+        <div class="w-full max-w-3xl">
             <div class="mb-4 md:mb-6 flex items-center justify-between">
                 <h2 class="text-lg md:text-xl lg:text-2xl font-bold text-dark-heading flex items-center">
                     <svg class="w-5 h-5 md:w-6 md:h-6 mr-2 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
