@@ -11,7 +11,7 @@ Because we use Jinja2 to render HTML from the server and HTMX for interactivity,
 - **Frontend Template Engine:** Jinja2
 - **Frontend Interactivity:** HTMX
 - **Styling:** Tailwind CSS
-- **Code Quality:** Ruff (Linting/Formatting) & pre-commit
+- **Code Quality:** Ruff (Linting/Formatting), Pyright (Strict Type Checking) & pre-commit
 
 ## Premium Features Added
 - **Custom Aliases:** Users can define their own URL endings (e.g., `/my-promo`).
