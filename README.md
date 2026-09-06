@@ -1,6 +1,6 @@
 # URL Shortener (Monolith)
 
-This project demonstrates a 100% Python Monolithic web application using Server-Side Rendering (SSR). 
+This project demonstrates a 100% Python Monolithic web application using Server-Side Rendering (SSR).
 Because we use Jinja2 to render HTML from the server and HTMX for interactivity, there is no separate frontend client repository. The FastAPI server handles both the backend logic and the frontend presentation.
 
 ## Tech Stack
@@ -11,6 +11,7 @@ Because we use Jinja2 to render HTML from the server and HTMX for interactivity,
 - **Frontend Template Engine:** Jinja2
 - **Frontend Interactivity:** HTMX
 - **Styling:** Tailwind CSS
+- **Code Quality:** Ruff (Linting/Formatting) & pre-commit
 
 ## Premium Features Added
 - **Custom Aliases:** Users can define their own URL endings (e.g., `/my-promo`).
