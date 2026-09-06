@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,22 +8,27 @@
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
     <!-- Include Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Professional Google Font: Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
                         sans: ['"Inter"', 'sans-serif'],
                     },
                     colors: {
-                        primary: {
-                            50: '#eff6ff',
-                            100: '#dbeafe',
-                            500: '#3b82f6',
-                            600: '#2563eb',
-                            700: '#1d4ed8',
+                        dark: {
+                            bg: '#050505',
+                            card: '#111111',
+                            border: '#222222',
+                            text: '#A3A3A3',
+                            heading: '#FAFAFA'
+                        },
+                        accent: {
+                            DEFAULT: '#38bdf8', // Tailwind light blue
+                            glow: 'rgba(56, 189, 248, 0.4)'
                         }
                     }
                 }
@@ -31,50 +36,69 @@
         }
     </script>
     <style>
+        body { font-family: 'Inter', sans-serif; }
         .htmx-indicator { display: none; }
         .htmx-request .htmx-indicator { display: inline-block; }
+        
+        /* Subtle grid background for dark mode */
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+        
+        /* Neon glow effect */
+        .glow-shadow {
+            box-shadow: 0 0 20px theme('colors.accent.glow');
+        }
     </style>
 </head>
-<body class="bg-gray-50 min-h-screen flex flex-col text-gray-900 antialiased">
+<body class="bg-dark-bg text-dark-text min-h-screen flex flex-col antialiased bg-grid">
     
-    <!-- Standard Professional Navbar -->
-    <header class="bg-white border-b border-gray-200 sticky top-0 z-10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Navbar -->
+    <header class="bg-dark-bg/80 backdrop-blur-md border-b border-dark-border sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
-                <div class="flex items-center gap-2">
-                    <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
-                    <span class="font-semibold text-lg tracking-tight">URL Shortener</span>
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded bg-dark-card border border-dark-border flex items-center justify-center shadow-[0_0_10px_rgba(56,189,248,0.2)]">
+                        <svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                    </div>
+                    <span class="font-semibold text-lg tracking-tight text-dark-heading">URL Shortener</span>
                 </div>
                 <nav class="flex gap-4">
-                    <a href="https://github.com/CVSCharan" target="_blank" class="text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors">GitHub</a>
+                    <a href="https://github.com/CVSCharan" target="_blank" class="text-sm font-medium text-dark-text hover:text-white transition-colors">GitHub</a>
                 </nav>
             </div>
         </div>
     </header>
 
     <!-- Main Content -->
-    <main class="flex-grow max-w-5xl mx-auto px-4 py-12 w-full flex flex-col">
+    <main class="flex-grow max-w-5xl mx-auto px-4 py-16 w-full flex flex-col relative">
         
+        <!-- Subtle background glow -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-lg h-64 bg-accent/10 blur-[100px] rounded-full pointer-events-none z-[-1]"></div>
+
         <!-- Header Section -->
-        <div class="mb-10 text-center sm:text-left">
-            <h1 class="text-3xl font-bold text-gray-900 mb-2">Create Short Links</h1>
-            <p class="text-base text-gray-600">
-                A fast, reliable URL shortening service powered by FastAPI and PostgreSQL.
+        <div class="mb-12 text-center">
+            <h1 class="text-4xl sm:text-5xl font-bold text-dark-heading mb-4 tracking-tight">Create <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent to-blue-600">Short Links</span></h1>
+            <p class="text-lg text-dark-text max-w-2xl mx-auto">
+                A fast, reliable URL shortening service. Dark, sleek, and developer-friendly.
             </p>
         </div>
 
         <!-- Input Card -->
-        <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-10">
-            <div class="p-6">
-                <form hx-post="/shorten" hx-target="#url-table-container" hx-swap="innerHTML" class="flex flex-col sm:flex-row gap-3">
+        <div class="bg-dark-card rounded-xl border border-dark-border mb-12 shadow-2xl overflow-hidden relative">
+            <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-accent/50 to-transparent"></div>
+            <div class="p-1">
+                <form hx-post="/shorten" hx-target="#url-table-container" hx-swap="innerHTML" class="flex flex-col sm:flex-row gap-2 bg-dark-bg p-2 rounded-lg">
                     <div class="flex-1 relative">
                         <label for="target_url" class="sr-only">Long URL</label>
-                        <input type="url" id="target_url" name="target_url" placeholder="Enter your long URL here (e.g., https://example.com/very-long-path)" required
-                            class="block w-full pl-4 pr-4 py-3 rounded-md border border-gray-300 bg-gray-50 text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-colors">
+                        <input type="url" id="target_url" name="target_url" placeholder="https://example.com/very-long-path" required
+                            class="block w-full pl-4 pr-4 py-4 rounded-md bg-transparent text-white placeholder-gray-600 border-none focus:outline-none focus:ring-0 sm:text-base">
                     </div>
                     <button type="submit" 
-                        class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors">
-                        Shorten URL
+                        class="inline-flex items-center justify-center px-8 py-4 border border-transparent text-sm font-semibold rounded-md text-dark-bg bg-accent hover:bg-white glow-shadow focus:outline-none transition-all duration-300">
+                        Shorten
                         <svg class="ml-2 -mr-1 h-4 w-4 htmx-indicator animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -86,25 +110,26 @@
 
         <!-- Links Table Section -->
         <div>
-            <div class="mb-4">
-                <h2 class="text-xl font-semibold text-gray-900">Recent Links</h2>
+            <div class="mb-6 flex items-center justify-between">
+                <h2 class="text-xl font-semibold text-dark-heading">Recent Links</h2>
             </div>
             
-            <div id="url-table-container" class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+            <div id="url-table-container" class="bg-dark-card rounded-xl border border-dark-border overflow-hidden shadow-2xl relative">
+                <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-dark-border to-transparent"></div>
                 {% include 'partials/url_list.html' %}
             </div>
         </div>
     </main>
 
     <!-- Professional Footer -->
-    <footer class="bg-white border-t border-gray-200 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <footer class="bg-dark-card border-t border-dark-border mt-auto">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div class="flex flex-col md:flex-row justify-between items-center gap-4">
                 <p class="text-sm text-gray-500">
                     &copy; 2026 CVS Charan. All rights reserved.
                 </p>
-                <div class="text-sm text-gray-500">
-                    Designed by <a href="https://charan-cvs.dev" target="_blank" class="text-primary-600 hover:text-primary-700 font-medium hover:underline">CVS Charan</a>
+                <div class="text-sm text-gray-500 flex items-center gap-2">
+                    Designed by <a href="https://charan-cvs.dev" target="_blank" class="text-dark-text hover:text-white font-medium transition-colors">CVS Charan</a>
                 </div>
             </div>
         </div>
