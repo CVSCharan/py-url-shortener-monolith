@@ -19,7 +19,7 @@ Because we use Jinja2 to render HTML from the server and HTMX for interactivity,
 - **Inline QR Modals:** Each link gets a dynamically generated QR code available via an HTMX modal.
 - **Rate Limiting:** IP-based rate limiting (5 requests/minute) using `slowapi` to prevent abuse.
 - **Dashboard & Pagination:** A dedicated dashboard at `/dashboard` to view all generated links.
-- **Jinja2 Component System:** Reusable UI macros (mimicking React components) for DRY templates.
+- **Jinja2 Components & DRY Layouts:** Reusable UI macros (mimicking React components) and a master `base.html` template for 100% consistent UI across the app.
 - **Shadcn UI Aesthetics:** Premium high-contrast Zinc monochrome theme with Inter typography.
 
 ## How to Run
