@@ -30,7 +30,7 @@ def generate_short_code(length=6):
 def read_root(request: Request, db: Session = Depends(get_db)):
     """Render the main page with a list of all URLs."""
     urls = db.query(models.URL).order_by(models.URL.id.desc()).all()
-    return templates.TemplateResponse("index.html", {"request": request, "urls": urls})
+    return templates.TemplateResponse(request=request, name="index.html", context={"urls": urls})
 
 
 @app.post("/shorten", response_class=HTMLResponse)
@@ -56,7 +56,7 @@ def shorten_url(request: Request, target_url: str = Form(...), db: Session = Dep
     urls = db.query(models.URL).order_by(models.URL.id.desc()).all()
     
     # We return ONLY the partial HTML that HTMX requested to replace
-    return templates.TemplateResponse("partials/url_list.html", {"request": request, "urls": urls})
+    return templates.TemplateResponse(request=request, name="partials/url_list.html", context={"urls": urls})
 
 
 @app.get("/{short_code}")
