@@ -1,106 +1,52 @@
-<!DOCTYPE html>
-<html lang="en" class="dark" style="color-scheme: dark;">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Python URL Shortener</title>
-    <!-- Include HTMX -->
-    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
-    <!-- Include Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Inter Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['"Inter"', 'sans-serif'],
-                    },
-                    colors: {
-                        dark: {
-                            bg: '#09090b',
-                            card: '#09090b',
-                            border: '#27272a',
-                            text: '#a1a1aa',
-                            heading: '#fafafa'
-                        },
-                        accent: {
-                            DEFAULT: '#fafafa',
-                            hover: '#f4f4f5'
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        
-        /* Subtle grid background for dark mode */
-        .bg-grid {
-            background-size: 40px 40px;
-            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-        }
+{% extends "base.html" %} {% block title %}Dashboard - Python URL Shortener{%
+endblock %} {% block extra_head %}
+<style>
+.glow-shadow {
+    box-shadow: 0 0 15px var(--tw-colors-accent-glow);
+}
+</style>
+{% endblock %} {% block content %}
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 w-full">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl md:text-3xl font-bold text-dark-heading">Dashboard</h1>
+    <div class="text-sm text-gray-400">
+      Total Links: <span class="text-white font-bold">{{ total_urls }}</span>
+    </div>
+  </div>
 
-        .glow-shadow {
-            box-shadow: 0 0 15px var(--tw-colors-accent-glow);
-        }
-    </style>
-</head>
-<body class="bg-dark-bg text-dark-text min-h-screen bg-grid antialiased">
-    
-    <!-- Navbar -->
-    <nav class="border-b border-dark-border bg-dark-bg/80 backdrop-blur-md sticky top-0 z-40">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 md:h-20 items-center">
-                <div class="flex-shrink-0 flex items-center">
-                    <div class="w-8 h-8 md:w-10 md:h-10 rounded bg-accent/20 flex items-center justify-center mr-3">
-                        <svg class="w-5 h-5 md:w-6 md:h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
-                    </div>
-                    <span class="font-bold text-xl md:text-2xl text-dark-heading tracking-tight">URL Shortener <span class="text-accent font-light">Pro</span></span>
-                </div>
-                <div class="flex space-x-4">
-                    <a href="/" class="text-sm md:text-base text-gray-400 hover:text-white transition-colors">Home</a>
-                    <a href="/dashboard" class="text-sm md:text-base text-accent font-bold">Dashboard</a>
-                    <a href="/about" class="text-sm md:text-base text-gray-400 hover:text-white transition-colors">About</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+  <div
+    id="url-table-container"
+    class="bg-dark-card rounded-lg md:rounded-xl border border-dark-border overflow-hidden shadow-2xl relative"
+  >
+    <div
+      class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-dark-border to-transparent"
+    ></div>
+    {% include 'partials/url_list.html' %}
+  </div>
 
-    <!-- Main Content -->
-    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
-        
-        <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl md:text-3xl font-bold text-dark-heading">Dashboard</h1>
-            <div class="text-sm text-gray-400">
-                Total Links: <span class="text-white font-bold">{{ total_urls }}</span>
-            </div>
-        </div>
-        
-        <div id="url-table-container">
-            {% include 'partials/url_list.html' %}
-        </div>
+  {% if total_pages > 1 %}
+  <div class="mt-8 flex justify-center items-center gap-2">
+    {% if current_page > 1 %}
+    <a
+      href="/dashboard?page={{ current_page - 1 }}"
+      class="px-3 py-2 bg-dark-card border border-dark-border rounded text-sm hover:text-white hover:border-accent transition-colors"
+      >&laquo; Prev</a
+    >
+    {% endif %}
 
-        {% if total_pages > 1 %}
-        <div class="mt-8 flex justify-center items-center gap-2">
-            {% if current_page > 1 %}
-            <a href="/dashboard?page={{ current_page - 1 }}" class="px-3 py-2 bg-dark-card border border-dark-border rounded text-sm hover:text-white hover:border-accent transition-colors">&laquo; Prev</a>
-            {% endif %}
+    <div class="text-sm text-gray-400 px-4">
+      Page <span class="text-white font-bold">{{ current_page }}</span> of {{
+      total_pages }}
+    </div>
 
-            <div class="text-sm text-gray-400 px-4">
-                Page <span class="text-white font-bold">{{ current_page }}</span> of {{ total_pages }}
-            </div>
-
-            {% if current_page < total_pages %}
-            <a href="/dashboard?page={{ current_page + 1 }}" class="px-3 py-2 bg-dark-card border border-dark-border rounded text-sm hover:text-white hover:border-accent transition-colors">Next &raquo;</a>
-            {% endif %}
-        </div>
-        {% endif %}
-    </main>
-
-</body>
-</html>
+    {% if current_page < total_pages %}
+    <a
+      href="/dashboard?page={{ current_page + 1 }}"
+      class="px-3 py-2 bg-dark-card border border-dark-border rounded text-sm hover:text-white hover:border-accent transition-colors"
+      >Next &raquo;</a
+    >
+    {% endif %}
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

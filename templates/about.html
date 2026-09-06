@@ -1,108 +1,41 @@
-<!DOCTYPE html>
-<html lang="en" class="dark" style="color-scheme: dark;">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - Python URL Shortener</title>
-    <!-- Include HTMX -->
-    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
-    <!-- Include Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Inter Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['"Inter"', 'sans-serif'],
-                    },
-                    colors: {
-                        dark: {
-                            bg: '#09090b',
-                            card: '#09090b',
-                            border: '#27272a',
-                            text: '#a1a1aa',
-                            heading: '#fafafa'
-                        },
-                        accent: {
-                            DEFAULT: '#fafafa',
-                            hover: '#f4f4f5'
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        body { font-family: 'Inter', sans-serif; }
+{% extends "base.html" %}
+
+{% block title %}About - Python URL Shortener{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 w-full">
+    <div class="bg-dark-card rounded-xl md:rounded-2xl border border-dark-border shadow-2xl p-6 md:p-10 mb-8 relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-accent/50 to-transparent"></div>
         
-        /* Subtle grid background for dark mode */
-        .bg-grid {
-            background-size: 40px 40px;
-            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-        }
-    </style>
-</head>
-<body class="bg-dark-bg text-dark-text min-h-screen bg-grid antialiased">
-    
-    <!-- Navbar -->
-    <nav class="border-b border-dark-border bg-dark-bg/80 backdrop-blur-md sticky top-0 z-40">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 md:h-20 items-center">
-                <div class="flex-shrink-0 flex items-center">
-                    <div class="w-8 h-8 md:w-10 md:h-10 rounded bg-accent/20 flex items-center justify-center mr-3">
-                        <svg class="w-5 h-5 md:w-6 md:h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
-                    </div>
-                    <span class="font-bold text-xl md:text-2xl text-dark-heading tracking-tight">URL Shortener <span class="text-accent font-light">Pro</span></span>
-                </div>
-                <div class="flex space-x-4">
-                    <a href="/" class="text-sm md:text-base text-gray-400 hover:text-white transition-colors">Home</a>
-                    <a href="/dashboard" class="text-sm md:text-base text-gray-400 hover:text-white transition-colors">Dashboard</a>
-                    <a href="/about" class="text-sm md:text-base text-accent font-bold">About</a>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Main Content -->
-    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
-        <div class="bg-dark-card rounded-xl md:rounded-2xl border border-dark-border shadow-2xl p-6 md:p-10 mb-8 relative overflow-hidden">
-            <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-accent/50 to-transparent"></div>
+        <h1 class="text-3xl md:text-4xl font-bold text-dark-heading mb-6">About This Project</h1>
+        
+        <div class="space-y-6 text-gray-300 leading-relaxed text-sm md:text-base">
+            <p>
+                Welcome to the <strong>Python URL Shortener Pro</strong>. This project serves as a showcase for a 100% Python-based monolithic architecture. It is built to demonstrate how to transition from a Node.js/MERN stack mindset to modern Python web development.
+            </p>
             
-            <h1 class="text-3xl md:text-4xl font-bold text-dark-heading mb-6">About This Project</h1>
-            
-            <div class="space-y-6 text-gray-300 leading-relaxed text-sm md:text-base">
-                <p>
-                    Welcome to the <strong>Python URL Shortener Pro</strong>. This project serves as a showcase for a 100% Python-based monolithic architecture. It is built to demonstrate how to transition from a Node.js/MERN stack mindset to modern Python web development.
-                </p>
-                
-                <h2 class="text-xl md:text-2xl font-bold text-dark-heading mt-8 mb-4 border-b border-dark-border pb-2">How It Works</h2>
-                <p>
-                    Unlike modern Single-Page Applications (SPAs) that require a separate frontend (like React or Vue), this application relies on <strong>Server-Side Rendering (SSR)</strong>. 
-                </p>
-                <ul class="list-disc pl-5 space-y-2">
-                    <li>The backend is powered by <strong>FastAPI</strong>, a highly performant Python web framework.</li>
-                    <li>HTML is dynamically generated on the server using the <strong>Jinja2</strong> templating engine.</li>
-                    <li>Instead of writing custom JavaScript to handle form submissions and UI updates, we use <strong>HTMX</strong>. HTMX allows us to make AJAX requests directly from HTML attributes (like <code>hx-post</code>) and swap specific parts of the page, giving the app a snappy, SPA-like feel without writing a single line of JavaScript.</li>
-                    <li>Data is persisted in a <strong>PostgreSQL</strong> database, managed via the <strong>SQLAlchemy</strong> ORM.</li>
-                </ul>
+            <h2 class="text-xl md:text-2xl font-bold text-dark-heading mt-8 mb-4 border-b border-dark-border pb-2">How It Works</h2>
+            <p>
+                Unlike modern Single-Page Applications (SPAs) that require a separate frontend (like React or Vue), this application relies on <strong>Server-Side Rendering (SSR)</strong>. 
+            </p>
+            <ul class="list-disc pl-5 space-y-2">
+                <li>The backend is powered by <strong>FastAPI</strong>, a highly performant Python web framework.</li>
+                <li>HTML is dynamically generated on the server using the <strong>Jinja2</strong> templating engine.</li>
+                <li>Instead of writing custom JavaScript to handle form submissions and UI updates, we use <strong>HTMX</strong>. HTMX allows us to make AJAX requests directly from HTML attributes (like <code>hx-post</code>) and swap specific parts of the page, giving the app a snappy, SPA-like feel without writing a single line of JavaScript.</li>
+                <li>Data is persisted in a <strong>PostgreSQL</strong> database, managed via the <strong>SQLAlchemy</strong> ORM.</li>
+            </ul>
 
-                <h2 class="text-xl md:text-2xl font-bold text-dark-heading mt-8 mb-4 border-b border-dark-border pb-2">Premium Features</h2>
-                <ul class="list-disc pl-5 space-y-2">
-                    <li><strong>Custom Aliases:</strong> Claim your own unique URL paths instead of random characters.</li>
-                    <li><strong>Password Protection:</strong> Secure sensitive destination links with bcrypt-hashed passwords.</li>
-                    <li><strong>Link Expiration:</strong> Set links to automatically expire (returning a 410 Gone status).</li>
-                    <li><strong>Inline QR Modals:</strong> Automatically generate scannable QR codes for every shortened URL, displayed in an HTMX-powered modal.</li>
-                    <li><strong>Rate Limiting:</strong> IP-based request throttling using <code>slowapi</code> to prevent spam.</li>
-                    <li><strong>Component Architecture:</strong> Built using reusable Jinja2 macros (like <code>ui_button</code>, <code>ui_input</code>) to mimic a React component structure without the JS bloat.</li>
-                    <li><strong>Sleek Shadcn UI:</strong> Styled fully with Tailwind CSS using the premium, high-contrast monochrome Zinc theme and Inter typography.</li>
-                </ul>
-            </div>
+            <h2 class="text-xl md:text-2xl font-bold text-dark-heading mt-8 mb-4 border-b border-dark-border pb-2">Premium Features</h2>
+            <ul class="list-disc pl-5 space-y-2">
+                <li><strong>Custom Aliases:</strong> Claim your own unique URL paths instead of random characters.</li>
+                <li><strong>Password Protection:</strong> Secure sensitive destination links with bcrypt-hashed passwords.</li>
+                <li><strong>Link Expiration:</strong> Set links to automatically expire (returning a 410 Gone status).</li>
+                <li><strong>Inline QR Modals:</strong> Automatically generate scannable QR codes for every shortened URL, displayed in an HTMX-powered modal.</li>
+                <li><strong>Rate Limiting:</strong> IP-based request throttling using <code>slowapi</code> to prevent spam.</li>
+                <li><strong>Component Architecture:</strong> Built using reusable Jinja2 macros (like <code>ui_button</code>, <code>ui_input</code>) to mimic a React component structure without the JS bloat.</li>
+                <li><strong>Sleek Shadcn UI:</strong> Styled fully with Tailwind CSS using the premium, high-contrast monochrome Zinc theme and Inter typography.</li>
+            </ul>
         </div>
-    </main>
-
-</body>
-</html>
+    </div>
+</div>
+{% endblock %}
