@@ -12,10 +12,13 @@ from database import engine, get_db
 # Create all database tables (Normally done with Alembic, but this works for basic apps)
 models.Base.metadata.create_all(bind=engine)
 
+import os
 app = FastAPI(title="Python URL Shortener")
 
 # Setup Jinja2 templates for Server-Side Rendering
-templates = Jinja2Templates(directory="templates")
+# Vercel needs an absolute path to the templates directory
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
 
 def generate_short_code(length=6):
     chars = string.ascii_letters + string.digits
