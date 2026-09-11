@@ -9,3 +9,9 @@ python-dotenv
 pre-commit
 ruff
 types-qrcode
+qrcode
+pillow
+passlib
+bcrypt
+slowapi
+alembic
